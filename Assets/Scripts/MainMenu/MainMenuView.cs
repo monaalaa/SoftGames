@@ -1,19 +1,36 @@
 using UnityEngine;
+using UnityEngine.UI;
+using VContainer;
 
 namespace Assets.Scripts.MainMenu
 {
     public class MainMenuView : MonoBehaviour
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
+        [SerializeField]
+        private Button _aceofShadows;
+        [SerializeField]
+        private Button _magicWords;
+        [SerializeField]
+        private Button _phoenixFlame;
 
+        private IMainMenuViewModel _mainMenuViewModel;
+
+        [Inject]
+        private void Constructor(IMainMenuViewModel mainMenuViewModel)
+        {
+            _mainMenuViewModel = mainMenuViewModel;
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Start()
         {
-
+            _aceofShadows.onClick.AddListener(() => OnClickButton("AceofShadows"));
+            _magicWords.onClick.AddListener(() => OnClickButton("MagicWords"));
+            _phoenixFlame.onClick.AddListener(() => OnClickButton("PhoenixFlame"));
         }
+
+        private void OnClickButton(string sceneName)
+        {
+            _mainMenuViewModel.LoadScene(sceneName);
+        } 
     }
 }

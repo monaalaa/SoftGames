@@ -1,9 +1,12 @@
-using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.MainMenu
 {
-    public class MainMenuViewModel
+    public class MainMenuViewModel : IMainMenuViewModel
     {
-
+        public void LoadScene(string sceneName)
+        {
+            SceneManager.LoadSceneAsync(sceneName);
+        }
     }
 }

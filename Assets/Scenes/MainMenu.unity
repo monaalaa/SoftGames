@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 87255117}
   - component: {fileID: 87255116}
   - component: {fileID: 87255115}
+  - component: {fileID: 87255119}
   m_Layer: 5
   m_Name: Main menu
   m_TagString: Untagged
@@ -220,6 +221,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &87255119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87255114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073246668cdacb64b90047d0d2a14746, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _aceofShadows: {fileID: 657414070}
+  _magicWords: {fileID: 1507896314}
+  _phoenixFlame: {fileID: 1421929998}
 --- !u!1 &150257325
 GameObject:
   m_ObjectHideFlags: 0
@@ -1340,6 +1356,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1507896312}
   m_CullTransparentMesh: 1
+--- !u!1 &1550221391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1550221392}
+  - component: {fileID: 1550221393}
+  m_Layer: 0
+  m_Name: ScopeLifeTime
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1550221392
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550221391}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1550221393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550221391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aae32035a26b9944bbf48f0260a0a56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentReference:
+    TypeName: 
+  autoRun: 1
+  autoInjectGameObjects:
+  - {fileID: 87255114}
 --- !u!1 &1951164351
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,3 +1549,4 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 87255118}
   - {fileID: 586175760}
+  - {fileID: 1550221392}
