@@ -46,7 +46,7 @@ public class SpriteAssetGenerator
             }
             else
             {
-                Debug.LogError("Failed to load texture: " + uwr.error);
+                Debug.Log("Failed to load texture: " + uwr.error);
                 return null;
             }
         }
