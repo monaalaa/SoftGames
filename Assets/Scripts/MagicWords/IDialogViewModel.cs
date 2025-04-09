@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
+using TMPro;
 using UniRx;
+using UnityEngine;
 
 namespace Assets.Scripts.MagicWords
 {
@@ -8,6 +10,8 @@ namespace Assets.Scripts.MagicWords
         public ReactiveCollection<Dialogue> DialogueList { get; }
         Task InitializeAsync(string url);
         Avatar GetAvatar(string name);
-        bool TryGetEmojiUrl(string emojiKey, out string emojiUrl);
+        TMP_SpriteAsset GetSpriteAsset();
+        void SetSpriteAssetMaterial(Material mat);
+        // bool TryGetEmojiUrl(string emojiKey, out string emojiUrl);
     }
 }

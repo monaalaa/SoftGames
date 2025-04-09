@@ -5,5 +5,5 @@ using UnityEngine.UI;
 public class DialogueUI:MonoBehaviour
 {
     public Image Image;
-    public Transform parent;
+    public TextMeshProUGUI Line;
 }

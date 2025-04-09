@@ -4,16 +4,24 @@ using System.Threading.Tasks;
 using VContainer;
 using UniRx;
 using System;
+using System.Text.RegularExpressions;
+using TMPro;
+using System.Linq;
 namespace Assets.Scripts.MagicWords
 {
     public class DialogViewModel : IDialogViewModel
     {
         private DialogueModel _dialogueModel;
 
-        private Dictionary<string, Emoji> emojiDictionary = new Dictionary<string, Emoji>();
+        private Dictionary<string, string> emojiDictionary = new Dictionary<string, string>();
         private Dictionary<string, Avatar> avatarDictionary = new Dictionary<string, Avatar>();
+        private static readonly Regex emojiTagRegex = new(@"\{(.*?)\}");
 
-        public ReactiveCollection<Dialogue> DialogueList { get; private set; } = 
+        private SpriteAssetGenerator spriteAssetGenerator = new SpriteAssetGenerator();
+        private TMP_SpriteAsset spriteAsset;
+        private Material spriteAssetMaterial;
+
+        public ReactiveCollection<Dialogue> DialogueList { get; private set; } =
             new ReactiveCollection<Dialogue>();
 
         [Inject]
@@ -21,20 +29,27 @@ namespace Assets.Scripts.MagicWords
         {
             _dialogueModel = dialogueModel;
         }
+
         public async Task InitializeAsync(string url)
         {
             await LoadDialogueDataAsync(url);
         }
+
+        public void SetSpriteAssetMaterial(Material mat)
+        {
+            spriteAssetMaterial = mat;
+        }
+
         private async Task LoadDialogueDataAsync(string url)
         {
             string jsonResponse = await WebRequestHelper.GetJsonData(url);
             _dialogueModel = JsonUtility.FromJson<DialogueModel>(jsonResponse);
 
-           
+
             // Populate emoji dictionary
             foreach (var emoji in _dialogueModel.emojies)
             {
-                emojiDictionary.Add(emoji.name, emoji);
+                emojiDictionary.Add(emoji.name, emoji.url);
             }
 
             // Populate avatar dictionary
@@ -42,9 +57,12 @@ namespace Assets.Scripts.MagicWords
             {
                 avatarDictionary.Add(avatar.name, avatar);
             }
+            spriteAsset = await spriteAssetGenerator.CreateFromUrlsAsync(emojiDictionary, spriteAssetMaterial);
 
             foreach (var dialog in _dialogueModel.dialogue)
             {
+                dialog.text = ReplaceEmojiTags(dialog.text);
+                Debug.Log(dialog.text);
                 DialogueList.Add(dialog);
                 await Task.Delay(100);
             }
@@ -59,15 +77,19 @@ namespace Assets.Scripts.MagicWords
             return null;
         }
 
-        public bool TryGetEmojiUrl(string emojiKey, out string emojiUrl)
+        public TMP_SpriteAsset GetSpriteAsset() { return spriteAsset; }
+
+        public string ReplaceEmojiTags(string input)
         {
-            emojiUrl = null;
-            if (emojiDictionary.TryGetValue(emojiKey, out var emoji))
+            return emojiTagRegex.Replace(input, match =>
             {
-                emojiUrl = emoji.url;
-                return true;
-            }
-            return false;
+                string tag = match.Groups[1].Value;
+                int index = emojiDictionary.Keys.ToList().IndexOf(tag);
+                if(index < 0 )
+                    index = 0;
+                return $"<sprite={index}>";
+            });
         }
+
     }
 }
