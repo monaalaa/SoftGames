@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
@@ -38,5 +39,8 @@ public class CardView : MonoBehaviour
             _cards.Push(cardInstance);
         }
     }
-
+    void OnDestroy()
+    {
+        DOTween.KillAll(); 
+    }
 }
